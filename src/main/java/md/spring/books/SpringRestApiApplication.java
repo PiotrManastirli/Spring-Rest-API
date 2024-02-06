@@ -1,4 +1,4 @@
-package md.spring.restapi;
+package md.spring.books;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import org.springframework.boot.SpringApplication;

@@ -1,7 +1,7 @@
-package md.spring.restapi.controllers;
+package md.spring.books.controllers;
 
-import md.spring.restapi.model.Book;
-import md.spring.restapi.services.BookService;
+import md.spring.books.model.Book;
+import md.spring.books.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

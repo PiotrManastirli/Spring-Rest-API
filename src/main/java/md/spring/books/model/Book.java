@@ -1,4 +1,4 @@
-package md.spring.restapi.model;
+package md.spring.books.model;
 
 import lombok.Data;
 

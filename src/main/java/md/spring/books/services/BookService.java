@@ -1,7 +1,6 @@
-package md.spring.restapi.services;
+package md.spring.books.services;
 
-import md.spring.restapi.model.Book;
-import org.springframework.http.ResponseEntity;
+import md.spring.books.model.Book;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
