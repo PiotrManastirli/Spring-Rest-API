@@ -22,10 +22,12 @@ public class TaskStateEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     Long id;
-    @Column(unique = true)
-    String name;
 
-    Long ordinal;
+    String name;
+    @OneToOne
+    TaskStateEntity leftTaskState;
+    @OneToOne
+    TaskStateEntity rightTaskState;
 
     @Builder.Default
     Instant createdAt = Instant.now();
@@ -38,4 +40,11 @@ public class TaskStateEntity {
     @JoinColumn(name = "task_state_id", referencedColumnName = "id")
     List<TaskEntity> tasks = new ArrayList<>();
 
+    public Optional<TaskStateEntity> getLeftTaskState() {
+        return Optional.ofNullable(leftTaskState);
+    }
+
+    public Optional<TaskStateEntity> getRightTaskState() {
+        return Optional.ofNullable(rightTaskState);
+    }
 }

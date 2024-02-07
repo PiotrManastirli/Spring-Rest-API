@@ -7,6 +7,7 @@ import lombok.experimental.FieldDefaults;
 import md.spring.restapi.task.tracker.store.entities.TaskStateEntity;
 
 import java.time.Instant;
+import java.util.List;
 
 @Data
 @Builder
@@ -16,11 +17,16 @@ import java.time.Instant;
 public class TaskStateDto {
     @NonNull
     Long id;
-    @NonNull
-    Long ordinal;
+    @JsonProperty("left_task_state_id")
+    Long leftTaskStateId;
+    @JsonProperty("right_task_state_id")
+    Long rightTaskStateId;
     @NonNull
     String name;
     @NonNull
     @JsonProperty("created_at")
     Instant createdAt;
+
+    @NonNull
+    List<TaskDto> tasks;
 }
