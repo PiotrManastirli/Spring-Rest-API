@@ -13,7 +13,6 @@ import md.spring.restapi.task.tracker.store.entities.ProjectEntity;
 import md.spring.restapi.task.tracker.store.entities.TaskStateEntity;
 import md.spring.restapi.task.tracker.store.repositories.TaskStateRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.Optional;
@@ -78,7 +77,7 @@ public class TaskStateService {
             throw new BadRequestException("Task state name can't be empty!");
         }
 
-        TaskStateEntity taskState = getTaskStateOrThrowExceptions(taskStateId);
+        TaskStateEntity taskState = serviceHelper.getTaskStateOrThrowException(taskStateId);
 
         taskStateRepository
                 .findTaskStateEntityByProjectIdAndNameContainsIgnoreCase(
@@ -95,7 +94,7 @@ public class TaskStateService {
 
     public TaskStateDto changeTaskPosition(Long taskStateId, Optional<Long> optionalLeftTaskStateId) {
 
-        TaskStateEntity changeTaskState = getTaskStateOrThrowExceptions(taskStateId);
+        TaskStateEntity changeTaskState = serviceHelper.getTaskStateOrThrowException(taskStateId);
 
         ProjectEntity project = changeTaskState.getProject();
 
@@ -114,7 +113,7 @@ public class TaskStateService {
                         throw new BadRequestException("Left task state id equals changed task state.");
                     }
 
-                    TaskStateEntity leftTaskStateEntity = getTaskStateOrThrowExceptions(leftTaskStateId);
+                    TaskStateEntity leftTaskStateEntity = serviceHelper.getTaskStateOrThrowException(leftTaskStateId);
 
                     if (!project.getId().equals(leftTaskStateEntity.getProject().getId())) {
                         throw new BadRequestException("Task state position can be changed within the same project.");
@@ -174,23 +173,11 @@ public class TaskStateService {
     }
 
     public AckDto deleteTaskState(Long taskStateId){
-        TaskStateEntity changeTaskState = getTaskStateOrThrowExceptions(taskStateId);
+        TaskStateEntity changeTaskState = serviceHelper.getTaskStateOrThrowException(taskStateId);
         replaceOldTaskStatePosition(changeTaskState);
         taskStateRepository.delete(changeTaskState);
         return AckDto.builder().answer(true).build();
     }
-
-    private TaskStateEntity getTaskStateOrThrowExceptions(Long taskStateId){
-        return taskStateRepository
-                .findById(taskStateId)
-                .orElseThrow(
-                        ()-> new NotFoundException(
-                                String.format("Task state with \"%s\" id doesn't exist.",
-                                        taskStateId)
-                        )
-                );
-    }
-
     private void replaceOldTaskStatePosition(TaskStateEntity changeTaskState) {
 
         Optional<TaskStateEntity> optionalOldLeftTaskState = changeTaskState.getLeftTaskState();
