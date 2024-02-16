@@ -22,6 +22,8 @@ public class TasksController {
     TaskService taskService;
 
     public static final String GET_TASKS = "/api/projects/{task_state_id}/tasks";
+    public static final String GET_USER_TASKS = "/api/projects/user/{user_id}/tasks";
+    public static final String GET_PROJECT_TASKS = "/api/projects/project/{project_id}/tasks";
     public static final String CREATE_TASK = "/api/projects/{task_state_id}/task";
     public static final String UPDATE_TASK= "/api/tasks/{task_id}";
     public static final String CHANGE_TASK_POSITION = "/api/tasks/{task_id}/position/change";
@@ -31,13 +33,23 @@ public class TasksController {
     public List<TaskDto> getTasks(@PathVariable(name = "task_state_id") Long taskStateId){
         return taskService.getTasks(taskStateId);
     }
+    @GetMapping(GET_USER_TASKS)
+    public List<TaskDto> getUserTasks(@PathVariable(name = "user_id") Long userId) {
+        return taskService.getUserTasks(userId);
+    }
+
+    @GetMapping(GET_PROJECT_TASKS)
+    public List<TaskDto> getProjectTasks(@PathVariable(name = "project_id") Long projectId) {
+        return taskService.getTasksByProject(projectId);
+    }
 
     @PostMapping(CREATE_TASK)
     public TaskDto createTask(
             @PathVariable(name = "task_state_id") Long taskStateId,
             @RequestParam(name = "task_name") String taskStateName,
-            @RequestParam(name = "task_description") String taskDescription){
-        return taskService.createTask(taskStateId,taskStateName,taskDescription);
+            @RequestParam(name = "task_description") String taskDescription,
+            @RequestParam(name = "user_id") Long userId){
+        return taskService.createTask(taskStateId,taskStateName,taskDescription,userId);
     }
 
     @PatchMapping(UPDATE_TASK)

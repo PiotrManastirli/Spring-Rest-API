@@ -3,7 +3,6 @@ package md.spring.restapi.task.tracker.api.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import md.spring.restapi.task.tracker.store.entities.TaskStateEntity;
 
 import java.time.Instant;
 import java.util.List;
@@ -13,14 +12,10 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class TaskDto {
+public class UserDto {
     Long id;
-
-    String name;
-    @JsonProperty("created_at")
-    Instant createdAt;
-
-    String description;
-    String taskState;
-
+    String username;
+    String password;
+    String role;
+    List<Long> taskIds;
 }

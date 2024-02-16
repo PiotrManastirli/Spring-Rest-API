@@ -8,9 +8,11 @@ import md.spring.restapi.task.tracker.api.exceptions.NotFoundException;
 import md.spring.restapi.task.tracker.store.entities.ProjectEntity;
 import md.spring.restapi.task.tracker.store.entities.TaskEntity;
 import md.spring.restapi.task.tracker.store.entities.TaskStateEntity;
+import md.spring.restapi.task.tracker.store.entities.UserEntity;
 import md.spring.restapi.task.tracker.store.repositories.ProjectRepository;
 import md.spring.restapi.task.tracker.store.repositories.TaskRepository;
 import md.spring.restapi.task.tracker.store.repositories.TaskStateRepository;
+import md.spring.restapi.task.tracker.store.repositories.UserRepository;
 import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
@@ -21,6 +23,7 @@ public class ServiceHelper {
     ProjectRepository projectRepository;
     TaskStateRepository taskStateRepository;
     TaskRepository taskRepository;
+    UserRepository userRepository;
     public ProjectEntity getProjectOrThrowException(Long projectId) {
         return projectRepository
                 .findById(projectId)
@@ -42,6 +45,14 @@ public class ServiceHelper {
                 .findById(taskId)
                 .orElseThrow(() -> new NotFoundException(String.format("Project with \"%s\" doesn't exists.",
                         taskId))
+                );
+    }
+
+    public UserEntity getUserOrThrowException(Long userId) {
+        return userRepository
+                .findById(userId)
+                .orElseThrow(() -> new NotFoundException(String.format("Project with \"%s\" doesn't exists.",
+                        userId))
                 );
     }
 
