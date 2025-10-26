@@ -27,7 +27,8 @@ public class TaskEntity {
     Instant createdAt = Instant.now();
 
     String description;
-
     @ManyToOne(fetch = FetchType.LAZY)
     TaskStateEntity taskState;
+    @ManyToOne(fetch = FetchType.LAZY)
+    UserEntity user;
 }
